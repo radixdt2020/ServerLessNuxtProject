@@ -49,6 +49,7 @@ module.exports = {
     render: {
         compressor: false,
     },
+    loading: '~/components/loader.vue',
     serverMiddleware: [
         '~/api/index.js'
     ],

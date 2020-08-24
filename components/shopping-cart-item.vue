@@ -1,5 +1,7 @@
 <template>
     <v-container class="grey lighten-5">
+      <!-- <GroceryItems @add-to-cart="updateCart" style="display:none;"/> -->
+      
       {{cartData}}
     <v-row no-gutters>
       <template v-for="n in 4">
@@ -23,8 +25,13 @@
 </template>
 
 <script>
+    // import GroceryItems from "~/components/grocery-item";
+
     export default {
         layout: "shopping-cart-item",
+        components: { 
+            // GroceryItems
+          },
         middleware: ["auth"],
         props: {
             cartData: {
@@ -34,13 +41,13 @@
         },
         data() {
             return {
-                showDetail: false
             };
         },
         methods: {
-            mouseOver: function () {
-                this.showDetail = true;
-            }
+             cart(e) {
+                   console.log('hii456');
+                    //  this.check = params;
+    }
         }
     };
 </script>

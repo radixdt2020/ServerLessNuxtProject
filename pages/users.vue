@@ -5,7 +5,6 @@
             <!-- <b-table striped hover :items="items" :fields="fields"></b-table> -->
 
             <div>
-
                 <v-sheet class="mx-auto"
                          elevation="8">
                     <v-slide-group class="pa-4"
@@ -14,7 +13,7 @@
                                    :show-arrows="showArrows">
                         <v-slide-item v-for="totalCategory in totalItems"
                                       :key="totalCategory.CategoryType">
-                            <b-navbar toggleable="md" variant="white">
+                               <b-navbar toggleable="md" variant="white">
                                 <b-navbar-toggle target="nav_collapse" />
                                 <b-navbar-brand to="/">
                                 </b-navbar-brand>
@@ -24,8 +23,7 @@
                                         <!-- <b-nav-item to="/" exact>
                                             Home
                                         </b-nav-item> -->
-                                        <b-nav-item :to="totalCategory.rediredtToPage" :title="totalCategory.CategoryType" v-on:click="$emit('updateCarts')" >
-                                            <!-- @click="categoryTypeClickEvent(totalCategory.CategoryType)" v-on:click="$emit('updateCarts', totalCategory.CategoryType)"-->
+                                        <b-nav-item :to="totalCategory.rediredtToPage" @click="categoryTypeClickEvent(totalCategory.CategoryType)">
                                             <div style="border-radius: 50%;">
                                                 <img :src="require(`../assets/img/${totalCategory.src}`)" class="product__image" width="40px" height="40px" />
                                             </div>
@@ -43,20 +41,26 @@
 
             <div style="width:100%; display:flex; padding-left: 12px; cursor: pointer;">
                 <div style="width:50%; padding-top: 10px; ">
-                    <nuxt-link to="/user-tabs/mobiles">
+                    <b-navbar-nav style="padding-left: 0px;">
+                    <b-nav-item @click="categoryTypeClickEvent('Mobiles')">
                         <img :src="require(`../assets/img/smart-phone.png`)" class="product__image" width="130%" />
-                    </nuxt-link>
+                    </b-nav-item>
+                    </b-navbar-nav>
                 </div>
                 <div style="width:50%; padding-top: 10px;">
                     <div style="width:25%; padding-left: 305px;">
-                        <nuxt-link to="/user-tabs/boat">
+                        <b-navbar-nav style="padding-left: 0px;">
+                        <b-nav-item @click="categoryTypeClickEvent('Boat')">
                             <img :src="require(`../assets/img/boat-offer.png`)" class="product__image" height="322px" width="546px" />
-                        </nuxt-link>
+                       </b-nav-item>
+                       </b-navbar-nav>
                     </div>
-                    <div style="width:25%; padding-left: 305px; padding-top: 23px;">
-                        <nuxt-link to="/user-tabs/laptop">
+                    <div style="width:25%; padding-left: 305px; padding-top: 9px;">
+                        <b-navbar-nav style="padding-left: 0px;">
+                         <b-nav-item @click="categoryTypeClickEvent('Laptop')">
                             <img :src="require(`../assets/img/laptops.png`)" class="product__image" height="333px" width="546px" />
-                        </nuxt-link>
+                        </b-nav-item>
+                        </b-navbar-nav>
                     </div>
                 </div>
             </div>
@@ -100,7 +104,7 @@
                                 </b-navbar-brand>
                                 <b-collapse id="nav_collapse" is-nav>
                                     <b-navbar-nav>
-                                        <b-nav-item :to="category.rediredtToPage">
+                                        <b-nav-item :to="category.rediredtToPage" @click="categoryTypeClickEvent(category.CategoryType)">
                                             <v-list-item-title>{{category.CategoryType}}</v-list-item-title>
                                         </b-nav-item>
                                     </b-navbar-nav>
@@ -112,18 +116,18 @@
                 </v-list>
             </v-navigation-drawer>
         </div>
-        <!-- <GroceryItem :categories="totalItems.CategoryType"  style="display:none;"></GroceryItem> -->
+        <div id="app">
+             <!-- <GroceryItem @add-to-cart="updateCart"  style="display:none;"></GroceryItem> -->
+        </div>
     </div>
 </template>
 
 <script>
     import GroceryItem from "~/components/grocery-item";
-    import ShoppingCart from './user-tabs/shopping-cart ';
 
     export default {
         components: {
-            GroceryItem,
-            ShoppingCart
+            GroceryItem
         },
         middleware: ['auth'],
         data() {
@@ -135,14 +139,15 @@
                 prevIcon: false,
                 nextIcon: false,
                 totalItems: [],
+                urlLoc: String,
                 selectedCategoryType: String,
             }
         },
         methods: {
-
             categoryTypeClickEvent(item) {
                 this.selectedCategoryType = item;
-                this.$emit('update-cart', this.selectedCategoryType);
+                this.urlLoc = '/user-tabs/grocery?name='+ this.selectedCategoryType;
+                window.location.href = this.urlLoc;
             }
         },        // async asyncData({ $auth, $axios, params }) {
         //     let result = (await $axios.get("api/administration/users")).data
@@ -151,7 +156,12 @@
 
         async asyncData({ $auth, $axios, params }) {
             let result = (await $axios.get("api/user/items")).data
-            return { totalItems: result }
+            return new Promise((resolve) => {
+                setTimeout(function () {
+                    resolve({ totalItems: result })
+                }, 1000)
+            })
+            // return { totalItems: result }
         }
     }
 </script>

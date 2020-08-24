@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 style="font-size: 20px; color: #222; font-weight: 400;">Essential Products For You</h1>
-        <ShoppingCart :cartData="AddToCartData" style="display:none;" />
+        <!-- <ShoppingCartItems :cartData="AddToCartData" style="display:none;" /> -->
         <v-row>
             <v-col v-for="n in 1" :key="n"
                    cols="sm">
@@ -70,10 +70,12 @@
 </template>
 
 <script>
-    import ShoppingCart from "~/components/shopping-cart-item";
+    // import ShoppingCartItems from "~/components/shopping-cart-item";
     export default {
         layout: "grocery-item",
-        components: { ShoppingCart },
+        components: {
+            // ShoppingCart
+        },
         middleware: ["auth"],
         props: {
             item: {
@@ -81,6 +83,7 @@
                 default: () => [],
             }
         },
+
         data() {
             return {
                 AddToCartData: []
@@ -113,9 +116,38 @@
                     , totalDiscount: data.totalDiscount
                     , ProductName: data.ProductName
                 })
+
+                // console.log(this.AddToCartData);
+                // this.$emit('add-to-cart',this.AddToCartData.productId);
+                //  this.$emit('cartItems', this.AddToCartData);
             }
         }
     }
+
+//    var app=new Vue({
+//     el:"#app",
+//     data:{premium:true,
+//     //cart:0
+//     cart:[]
+// },
+//     methods:
+//     {
+//         updateCart(id)
+//         {
+//            // this.cart+=1;
+//            this.cart.push(id)
+//         },
+//         removeCart(id)
+//         {
+//             debugger;
+
+//         index=  this.cart.indexOf(id);
+//        this.cart= this.cart.slice(0, index)
+//           console.log(this.cart);
+//         }
+//     }
+// }
+// )
 </script>
 
 <style>
