@@ -1,6 +1,15 @@
 <template>
     <div>
         <div>
+            <!-- <nuxt-link to="/user-tabs/shopping-cart"> -->
+                <v-btn color="white" style="color: black; margin-left: 1500px;" @click="redirectCart">
+                    <img :src="require(`assets/img/cart.png`)" class="product__image" width="21px" height="21px" />
+                    Cart ( {{cart.length}} )
+                    <!-- <ShoppingCart style="display:none;"  :cartItems="cart" /> -->
+                </v-btn>
+            <!-- </nuxt-link> -->
+        </div>
+        <div style="padding-top:10px;">
             <v-sheet class="mx-auto"
                      elevation="8">
                 <v-slide-group class="pa-4"
@@ -16,9 +25,6 @@
 
                             <b-collapse id="nav_collapse" is-nav>
                                 <b-navbar-nav>
-                                    <!-- <b-nav-item to="/" exact>
-                                        Home
-                                    </b-nav-item> -->
                                     <b-nav-item :to="totalCategory.rediredtToPage" @click="categoryTypeClickEvent(totalCategory.CategoryType)">
                                         <div style="border-radius: 50%;">
                                             <img :src="require(`assets/img/${totalCategory.src}`)" class="product__image" width="40px" height="40px" />
@@ -35,7 +41,7 @@
             </v-sheet>
         </div>
         <div class="col-lg-12">
-            <GroceryItem :item="items" />
+            <GroceryItem  @update-cart="updateCart" :item="items" />
             <!-- <v-pagination v-model="page"
                           :length="length"
                           @input="next" ></v-pagination> -->
@@ -47,11 +53,11 @@
 
 <script>
     import GroceryItem from "~/components/grocery-item";
-
+    
     export default {
-        // name: "Grocery",
+        name: "Grocery",
         components: {
-            GroceryItem,
+            GroceryItem
         },
         middleware: ["auth"],
         computed: {
@@ -72,6 +78,7 @@
                 totalItems: [],
                 urlLoc: String,
                 selectedCategoryType: String,
+                cart: [],
             };
         },
         mounted: function () {
@@ -91,6 +98,17 @@
                 this.selectedCategoryType = item;
                 this.urlLoc = '/user-tabs/grocery?name=' + this.selectedCategoryType;
                 window.location.href = this.urlLoc;
+            },
+            updateCart(item)
+            {
+                this.cart.push(item)
+                localStorage.setItem("cartItems",JSON.stringify(this.cart));
+            },
+            redirectCart(){
+                this.$emit('cart-items', this.cart);
+                this.$router.push('/user-tabs/shopping-cart')
+                // this.urlLoc = '/user-tabs/shopping-cart';
+                // window.location.href = this.urlLoc;
             }
         },
         async asyncData({ $auth, $axios, params }) {
@@ -98,7 +116,7 @@
             let totalCategoryItems = (await $axios.get("api/user/items")).data
             return new Promise((resolve) => {
                 setTimeout(function () {
-                    resolve({ items: result, totalItems: totalCategoryItems })
+                    resolve({ items: result.Items, totalItems: totalCategoryItems })
                 }, 1000)
             })
             // this.$nuxt.$loading.start()
@@ -108,28 +126,4 @@
 
         },
     };
-//    var app=new Vue({
-//     el:"#app",
-//     data:{premium:true,
-//     //cart:0
-//     cart:[]
-// },
-//     methods:
-//     {
-//         updateCart(id)
-//         {
-//            // this.cart+=1;
-//            this.cart.push(id)
-//         },
-//         removeCart(id)
-//         {
-//             debugger;
-
-//         index=  this.cart.indexOf(id);
-//        this.cart= this.cart.slice(0, index)
-//           console.log(this.cart);
-//         }
-//     }
-// }
-// )
 </script>

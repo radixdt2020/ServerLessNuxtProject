@@ -23,7 +23,7 @@
                                         <!-- <b-nav-item to="/" exact>
                                             Home
                                         </b-nav-item> -->
-                                        <b-nav-item :to="totalCategory.rediredtToPage" @click="categoryTypeClickEvent(totalCategory.CategoryType)">
+                                        <b-nav-item :to="totalCategory.redirectToPage" @click="categoryTypeClickEvent(totalCategory.CategoryType)">
                                             <div style="border-radius: 50%;">
                                                 <img :src="require(`../assets/img/${totalCategory.src}`)" class="product__image" width="40px" height="40px" />
                                             </div>
@@ -84,12 +84,12 @@
                 <v-toolbar-title>
                     <v-app-bar-nav-icon color="#fcb69f" @click="drawer = true"></v-app-bar-nav-icon>
                     <img :src="require(`../assets/img/paytmmall-logo.jpg`)" class="product__image" width="80px" height="40px" />
-                    <nuxt-link to="/user-tabs/shopping-cart ">
+                    <!-- <nuxt-link to="/user-tabs/shopping-cart ">
                         <v-btn color="white" style="color: black; margin-left: 1500px;">
                             <img :src="require(`../assets/img/cart.png`)" class="product__image" width="21px" height="21px" />
-                            Add To cart
+                            Cart
                         </v-btn>
-                    </nuxt-link>
+                    </nuxt-link> -->
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-app-bar>
@@ -104,7 +104,7 @@
                                 </b-navbar-brand>
                                 <b-collapse id="nav_collapse" is-nav>
                                     <b-navbar-nav>
-                                        <b-nav-item :to="category.rediredtToPage" @click="categoryTypeClickEvent(category.CategoryType)">
+                                        <b-nav-item :to="category.redirectToPage" @click="categoryTypeClickEvent(category.CategoryType)">
                                             <v-list-item-title>{{category.CategoryType}}</v-list-item-title>
                                         </b-nav-item>
                                     </b-navbar-nav>
@@ -117,7 +117,7 @@
             </v-navigation-drawer>
         </div>
         <div id="app">
-             <!-- <GroceryItem @add-to-cart="updateCart"  style="display:none;"></GroceryItem> -->
+             <!-- <GroceryItem @add-to-cart="updateCart"  style="display:none;"> -->
         </div>
     </div>
 </template>

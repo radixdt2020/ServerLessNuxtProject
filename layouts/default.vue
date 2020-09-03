@@ -23,6 +23,9 @@
                         <b-nav-item to="/products">
                             Products
                         </b-nav-item>
+                        <b-nav-item to="/item">
+                            Items
+                        </b-nav-item>
                     </b-navbar-nav>
                     <b-navbar-nav class="ml-auto">
                         <template v-if="$auth.$state.loggedIn">

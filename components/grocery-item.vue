@@ -86,7 +86,7 @@
 
         data() {
             return {
-                AddToCartData: []
+                // AddToCartData: []
             };
         },
         methods: {
@@ -95,59 +95,33 @@
             // }
 
             addToCart(item) {
-                var selectedItem = {
-                    "productId": item.productId
-                    , "src": item.src
-                    , "price": item.price
-                    , "originalPrice": item.originalPrice
-                    , "discount": item.discount
-                    , "totalDiscount": item.totalDiscount
-                    , "ProductName": item.ProductName
-                }
+                // var selectedItem = {
+                //     "ProductId": item.ProductId
+                //     , "src": item.src
+                //     , "price": item.price
+                //     , "originalPrice": item.originalPrice
+                //     , "discount": item.discount
+                //     , "totalDiscount": item.totalDiscount
+                //     , "ProductName": item.ProductName
+                // }
 
-                const data = selectedItem;
+                // const data = selectedItem;
 
-                this.AddToCartData.push({
-                    productId: data.productId
-                    , src: data.src
-                    , price: data.price
-                    , originalPrice: data.originalPrice
-                    , discount: data.discount
-                    , totalDiscount: data.totalDiscount
-                    , ProductName: data.ProductName
-                })
+                // this.AddToCartData.push({
+                //     ProductId: data.ProductId
+                //     , src: data.src
+                //     , price: data.price
+                //     , originalPrice: data.originalPrice
+                //     , discount: data.discount
+                //     , totalDiscount: data.totalDiscount
+                //     , ProductName: data.ProductName
+                // })
 
                 // console.log(this.AddToCartData);
-                // this.$emit('add-to-cart',this.AddToCartData.productId);
-                //  this.$emit('cartItems', this.AddToCartData);
+                this.$emit('update-cart', item);
             }
         }
     }
-
-//    var app=new Vue({
-//     el:"#app",
-//     data:{premium:true,
-//     //cart:0
-//     cart:[]
-// },
-//     methods:
-//     {
-//         updateCart(id)
-//         {
-//            // this.cart+=1;
-//            this.cart.push(id)
-//         },
-//         removeCart(id)
-//         {
-//             debugger;
-
-//         index=  this.cart.indexOf(id);
-//        this.cart= this.cart.slice(0, index)
-//           console.log(this.cart);
-//         }
-//     }
-// }
-// )
 </script>
 
 <style>

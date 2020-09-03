@@ -15,8 +15,10 @@ module.exports = function (app) {
     app.disable(xPoweredBy);
     app.use(helmet());
     app.use(compression());
-    app.use(bodyParser.urlencoded({ extended: false, limit: urlEncodedLimit }));
-    app.use(bodyParser.json({ limit: jsonLimit }));
+    app.use(bodyParser.json({ limit: "50mb" }))
+    app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
+    // app.use(bodyParser.urlencoded({ extended: false, limit: urlEncodedLimit }));
+    // app.use(bodyParser.json({ limit: jsonLimit }));
     app.use(authenticationMiddleware(unAuthenticatedUris));
     app.use(dataSanitizer);
     if (process.env.NODE_ENV === development) {
